@@ -1,0 +1,99 @@
+{
+    "searchHint": "Search",
+    "@searchHint": {
+        "description": "Search"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings"
+    },
+    "tempUnit": "Temperature Unit",
+    "@tempUnit": {
+        "description": "Temperature Unit"
+    },
+    "appTheme": "App Theme",
+    "@appTheme": {
+        "description": "App Theme"
+    },
+    "celsius": "Celsius",
+    "@celsius": {
+        "description": "Celsius"
+    },
+    "fahrenheit": "Fahrenheit",
+    "@fahrenheit": {
+        "description": "Fahrenheit"
+    },
+    "kelvin": "Kelvin",
+    "@kelvin": {
+        "description": "Kelvin"
+    },
+    "light": "Light",
+    "@light": {
+        "description": "Light"
+    },
+    "dark": "Dark",
+    "@dark": {
+        "description": "Dark"
+    },
+    "now": "Now",
+    "@now": {
+        "description": "Now"
+    },
+    "today": "Today",
+    "@today": {
+        "description": "Today"
+    },
+    "feelsLike": "FeelsLike",
+    "@feelsLike": {
+        "description": "FeelsLike"
+    },
+    "sunrise": "Sunrise",
+    "@sunrise": {
+        "description": "Sunrise"
+    },
+    "sunset": "Sunset",
+    "@sunset": {
+        "description": "Sunset"
+    },
+    "windSpeed": "Wind Speed",
+    "@windSpeed": {
+        "description": "Wind Speed"
+    },
+    "visibility": "Visibility",
+    "@visibility": {
+        "description": "Visibility"
+    },
+    "humidity": "Humidity",
+    "@humidity": {
+        "description": "Humidity"
+    },
+    "dewPoint": "DewPoint",
+    "@dewPoint": {
+        "description": "DewPoint"
+    },
+    "pressure": "Pressure",
+    "@pressure": {
+        "description": "Pressure"
+    },
+    "uvi": "UV Index",
+    "@uvi": {
+        "description": "UV Index"
+    },
+    "addCity":"Add a City",
+    "@addCity": {"description":"Add a City"},
+    "delete" :"Delete",
+    "@delete" :{
+        "description":"Delete"},
+    "cityAddition" :"{cityname} city is added to the cities list",
+    "@cityAddition" :{
+        "description":"Inserting to the cities list message",
+    "placeholders":{"cityname":{"type":"String"}}},
+    "language":"Language",
+    "@language":{"description":"language"},
+    "high":"HighTemp",
+    "@high":{"description":"HighTemp"},
+    "low":"LowTemp",
+    "@low":{"description":"LowTemp"},
+    "loading":"Loading...",
+    "@loading":{"description":"loading placeholder"}
+}
