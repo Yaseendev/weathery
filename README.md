@@ -1,16 +1,24 @@
-# weathery
+# Weathery
 
-A new Flutter project.
+## About this app
 
-## Getting Started
+Weathery is a weather app for android and iOS made with Flutter
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- Display your current location weather and detailed forecast
+- Search for cities by name and display their forecast
+- Handles and adapts to current location change 
+- Offline support, if there is no internet you can still see the weather from the last time the app was opened 
+- Multi-language support (currently English and Arabic)
+- Light/Dark themes support
+- Temperature unit conversion support 
+- Page Transition animations
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![Finished App](/Demo/WeatheryDemo.gif)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Notes
+
+- The weather api used in this app is openweathermap..if you want to clone this repository get your appid from openweathermap.org and use it with the api requests before you build the app
+- The state management solution used in this app is Riverpod
+- The database used is sqlite database with moor_flutter package
