@@ -27,6 +27,8 @@ dependencies:
   moor_flutter: ^3.1.0
   provider: ^3.0.0+1
   progress_indicators: ^0.1.5
+  flutter_screenutil: ^4.0.4+1
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:

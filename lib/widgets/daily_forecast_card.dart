@@ -7,20 +7,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weathery/utils/converters.dart';
 import 'package:weathery/utils/providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DailyForecastCard extends ConsumerWidget with WeatherIconsMapper {
   final dailyForecast;
   DailyForecastCard(this.dailyForecast);
-  
+
   @override
-  Widget build(BuildContext context,ScopedReader watch) {
+  Widget build(BuildContext context, ScopedReader watch) {
     final tempUnit = watch(temperatureUnitProvider);
     final _appThemeState = watch(appThemeStateProvider.state);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 3, vertical: 3),
       child: BlurryContainer(
         borderRadius: BorderRadius.circular(20),
-        bgColor: context.read(appThemeProvider).getContainerColor(context, _appThemeState),
+        bgColor: context
+            .read(appThemeProvider)
+            .getContainerColor(context, _appThemeState),
         padding: EdgeInsets.all(8),
         height: 250,
         child: ListView.separated(
@@ -40,17 +43,19 @@ class DailyForecastCard extends ConsumerWidget with WeatherIconsMapper {
                 index == 0
                     ? Text('${AppLocalizations.of(context).today}    ',
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500))
+                            fontSize: 55.sp, fontWeight: FontWeight.w500))
                     : Text(
                         DateFormat('EEE d').format(
                             DateTime.fromMillisecondsSinceEpoch(
                                 item['dt'] * 1000)),
-                        style: TextStyle(fontSize: 20)),
-                Text('${Temperature(intToDouble(item['temp']['max'])).as(tempUnit.state).round()}º',
-                    style:
-                        TextStyle(fontSize: 35, fontWeight: FontWeight.w600)),
-                Text('${Temperature(intToDouble(item['temp']['min'])).as(tempUnit.state).round()}º',
-                    style: TextStyle(fontSize: 20)),
+                        style: TextStyle(fontSize: 55.sp)),
+                Text(
+                    '${Temperature(intToDouble(item['temp']['max'])).as(tempUnit.state).round()}º',
+                    style: TextStyle(
+                        fontSize: 100.sp, fontWeight: FontWeight.w600)),
+                Text(
+                    '${Temperature(intToDouble(item['temp']['min'])).as(tempUnit.state).round()}º',
+                    style: TextStyle(fontSize: 55.sp)),
                 Icon(getIconData(item['weather'][0]['icon']), size: 40),
                 SizedBox(height: 12),
                 Row(children: [
@@ -59,7 +64,7 @@ class DailyForecastCard extends ConsumerWidget with WeatherIconsMapper {
                     color: Colors.lightBlueAccent,
                   ),
                   Text(' ${item['pop'].ceil()}%',
-                      style: TextStyle(fontSize: 20))
+                      style: TextStyle(fontSize: 55.sp))
                 ]),
               ],
             );

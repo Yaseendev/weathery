@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ValueTile extends StatelessWidget {
   final String label;
@@ -18,30 +20,32 @@ class ValueTile extends StatelessWidget {
             this.iconData != null
                 ? Icon(
                     iconData,
-                    size: 17,
+                    size: 50.sp,
                     color: Colors.white,
                   )
                 : Image.asset(
                     imageUri,
                     color: Colors.white,
-                    width: 15,
+                    width: 45.h,
                   ),
             SizedBox(
-              width: 4,
+              width: ScreenUtil().setWidth(5),
             ),
-            Text(
-              this.label,
-              overflow: TextOverflow.clip,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            Container(
+              width: ScreenUtil().setWidth(175),
+              child: FittedBox(
+                child: AutoSizeText(
+                  this.label,
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
           ],
         ),
         SizedBox(
-          height: 5,
-        ),
-        SizedBox(
-          height: 10,
+          height: ScreenUtil().setHeight(15),
         ),
         this.value,
       ],

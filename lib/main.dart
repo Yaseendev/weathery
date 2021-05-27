@@ -7,6 +7,7 @@ import './utils/geolocation_handler.dart';
 import 'utils/l10n/l10n.dart';
 import 'utils/providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Position currentPos;
 
@@ -28,20 +29,22 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final _appThemeState = watch(appThemeStateProvider.state);
     final _appLocaleState = watch(appLocaleStateProvider.state);
-    return MaterialApp(
-      title: 'Weather App',
-      theme: context
-          .read(appThemeProvider)
-          .getAppThemedata(context, _appThemeState),
-      home: HomeScreen(currentLocation: currentPos),
-      supportedLocales: L10n.all,
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      locale: context.read(appLocaleProvider).getAppLocale(context, _appLocaleState),
-      debugShowCheckedModeBanner: false,
+    return ScreenUtilInit(
+      allowFontScaling: false,
+      designSize: Size(1080, 1920),
+      builder: () => MaterialApp(
+        title: 'Weather App',
+        theme: context.read(appThemeProvider).getAppThemedata(context, _appThemeState),
+        home: HomeScreen(currentLocation: currentPos),
+        supportedLocales: L10n.all,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: context.read(appLocaleProvider).getAppLocale(context, _appLocaleState),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weathery/database/moorDB.dart';
@@ -6,6 +7,7 @@ import 'package:weathery/utils/converters.dart';
 import 'package:weathery/utils/providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WeatherCard extends ConsumerWidget with WeatherIconsMapper {
   final Weather cityWeather;
@@ -14,6 +16,7 @@ class WeatherCard extends ConsumerWidget with WeatherIconsMapper {
   Widget build(BuildContext context, ScopedReader watch) {
     final tempUnit = watch(temperatureUnitProvider);
     final _appLocaleState = watch(appLocaleStateProvider.state);
+    double width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.only(
         left: 8.0,
@@ -33,8 +36,8 @@ class WeatherCard extends ConsumerWidget with WeatherIconsMapper {
           : BoxDecoration(
               color: Colors.grey[500],
               borderRadius: BorderRadius.all(Radius.circular(30))),
-      height: 200,
-      width: 350,
+      height: width * .483,
+      width: width * .85,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -45,14 +48,11 @@ class WeatherCard extends ConsumerWidget with WeatherIconsMapper {
                   heightFactor: 0.5,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ConstrainedBox(
-                        constraints:
-                            BoxConstraints.expand(height: 150, width: 150),
-                        child: Icon(
-                          getIconData(cityWeather.iconCode),
-                          color: Colors.white,
-                          size: 140,
-                        )),
+                    child: Icon(
+                      getIconData(cityWeather.iconCode),
+                      color: Colors.white,
+                      size: 375.sp,
+                    ),
                   ),
                 )
               : GlowingProgressIndicator(
@@ -68,36 +68,52 @@ class WeatherCard extends ConsumerWidget with WeatherIconsMapper {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 cityWeather != null
-                    ? Text(
-                        _appLocaleState
-                            ? '${cityWeather.cityName} '
-                            : '${cityWeather.arCityName} ',
-                        overflow: TextOverflow.visible,
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
+                    ? Container(
+                        width: ScreenUtil().setWidth(375),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: AutoSizeText(
+                            _appLocaleState
+                                ? '${cityWeather.cityName} '
+                                : '${cityWeather.arCityName} ',
+                            wrapWords: true,
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                                fontSize: 83.sp,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
                       )
-                    : ScalingText(AppLocalizations.of(context).loading, style: TextStyle(fontSize: 20)),
+                    : ScalingText(AppLocalizations.of(context).loading,
+                        style: TextStyle(fontSize: 55.sp)),
                 SizedBox(width: 30),
                 cityWeather != null
-                    ? Text(
-                        '${Temperature(cityWeather.temperature).as(tempUnit.state).round()}' +
-                            Temperature.getTemperSympol(tempUnit.state),
-                        style: TextStyle(fontSize: 60, color: Colors.white),
+                    ? Container(
+                        width: ScreenUtil().setWidth(475),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: AutoSizeText(
+                            '${Temperature(cityWeather.temperature).as(tempUnit.state).round()}' +
+                                Temperature.getTemperSympol(tempUnit.state),
+                            style: TextStyle(
+                                fontSize: 130.sp, color: Colors.white),
+                          ),
+                        ),
                       )
-                    : ScalingText(AppLocalizations.of(context).loading, style: TextStyle(fontSize: 20)),
+                    : ScalingText(AppLocalizations.of(context).loading,
+                        style: TextStyle(fontSize: 55.sp)),
                 SizedBox(),
                 cityWeather != null
                     ? Text(
                         _appLocaleState
                             ? cityWeather.description
                             : cityWeather.arDesc,
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        style: TextStyle(fontSize: 55.sp, color: Colors.white),
                       )
                     : ScalingText(
                         AppLocalizations.of(context).loading,
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 55.sp),
                       ),
               ],
             ),

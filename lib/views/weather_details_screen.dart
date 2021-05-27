@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localization.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
 import '../utils/converters.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
   final Weather weather;
@@ -34,7 +36,7 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
               content: Text(
             AppLocalizations.of(context).cityAddition(
                 _appLocaleState ? weather.cityName : weather.arCityName),
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 60.sp),
           )));
         },
         child: SafeArea(
@@ -70,7 +72,9 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
                                     .insertWeather(weather)
                                     .whenComplete(() {
                                   context.read(fromProvider).state = false;
-                                 if (!context.read(initStreamProvider).state)context.read(initStreamProvider).state = true;
+                                  if (!context.read(initStreamProvider).state)
+                                    context.read(initStreamProvider).state =
+                                        true;
                                 });
                               })
                           : Container(),
@@ -101,7 +105,7 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
                             Text(
                               '${_appLocaleState ? weather.cityName : weather.arCityName}, ${weather.countryName}',
                               style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 85.sp,
                                 letterSpacing: 5,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -133,7 +137,7 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
                                         heightFactor: 0.5,
                                         child: Icon(
                                           getIconData(weather.iconCode),
-                                          size: 100,
+                                          size: 290.sp,
                                         ),
                                       ),
                                       Column(
@@ -141,13 +145,13 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
                                           Text(
                                             '${Temperature(weather.temperature).as(tempUnit.state).round()}º',
                                             style: TextStyle(
-                                              fontSize: 60,
+                                              fontSize: 168.sp,
                                             ),
                                           ),
                                           Text(
                                             '${Temperature(weather.maxTemperature).as(tempUnit.state).round()}º/${Temperature(weather.minTemperature).as(tempUnit.state).round()}º   ',
                                             style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 58.sp,
                                             ),
                                           ),
                                         ],
@@ -161,7 +165,7 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
                                         : weather.arDesc,
                                     style: TextStyle(
                                       letterSpacing: 4,
-                                      fontSize: 17,
+                                      fontSize: 48.sp,
                                     ),
                                   ),
                                 ],
@@ -173,7 +177,7 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
                     ),
                   ),
                   Container(
-                    width: double.infinity,
+                    width: ScreenUtil().screenWidth,
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -184,87 +188,158 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
                             cardIcon: Image.asset(
                               'assets/images/tempr.png',
                               scale: 0.3,
-                              height: 40,
+                              height: ScreenUtil().setHeight(100),
                               color: context
                                   .read(appThemeProvider)
                                   .getImageIconColor(context, _appThemeState),
                             ),
-                            title: Text(
+                            title: AutoSizeText(
                               AppLocalizations.of(context).feelsLike,
+                              locale: context
+                                  .read(appLocaleProvider)
+                                  .getAppLocale(context, _appLocaleState),
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
+                                  fontSize: ScreenUtil().setSp(48),
+                                  fontWeight: FontWeight.w500),
                             ),
-                            value: Text(
-                                '${Temperature(weather.feelslike).as(tempUnit.state).round()}º',
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.w500)),
+                            value: Container(
+                              width: ScreenUtil().setWidth(110),
+                              height: ScreenUtil().setHeight(50),
+                              child: FittedBox(
+                                child: AutoSizeText(
+                                    '${Temperature(weather.feelslike).as(tempUnit.state).round()}º',
+                                    locale: context
+                                        .read(appLocaleProvider)
+                                        .getAppLocale(context, _appLocaleState),
+                                    style: TextStyle(
+                                        fontSize: 65.sp,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                            ),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: ScreenUtil().setWidth(5)),
                           WeatherInfoCard(
                             cardIcon: Image.asset(
                               'assets/images/sunrise.png',
                               scale: 0.3,
-                              height: 40,
+                              height: ScreenUtil().setHeight(100),
                               color: context
                                   .read(appThemeProvider)
                                   .getImageIconColor(context, _appThemeState),
                             ),
-                            title: Text(AppLocalizations.of(context).sunrise,
+                            title: AutoSizeText(
+                                AppLocalizations.of(context).sunrise,
+                                locale: context
+                                    .read(appLocaleProvider)
+                                    .getAppLocale(context, _appLocaleState),
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w500)),
-                            value: Text(
-                                DateFormat('hh:mm a').format(
-                                    DateTime.fromMillisecondsSinceEpoch(
-                                        weather.sunrise * 1000)),
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500)),
+                                    fontSize: 48.sp,
+                                    fontWeight: FontWeight.w500)),
+                            value: FittedBox(
+                              child: AutoSizeText(
+                                  DateFormat('hh:mm a').format(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          weather.sunrise * 1000)),
+                                  locale: context
+                                      .read(appLocaleProvider)
+                                      .getAppLocale(context, _appLocaleState),
+                                  style: TextStyle(
+                                      fontSize: 50.sp,
+                                      fontWeight: FontWeight.w500)),
+                            ),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: ScreenUtil().setWidth(5)),
                           WeatherInfoCard(
                             cardIcon: Image.asset(
                               'assets/images/sunset.png',
                               scale: 0.3,
-                              height: 40,
+                              height: ScreenUtil().setHeight(100),
                               color: context
                                   .read(appThemeProvider)
                                   .getImageIconColor(context, _appThemeState),
                             ),
-                            title: Text(AppLocalizations.of(context).sunset,
+                            title: AutoSizeText(
+                                AppLocalizations.of(context).sunset,
+                                locale: context
+                                    .read(appLocaleProvider)
+                                    .getAppLocale(context, _appLocaleState),
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500)),
-                            value: Text(
-                                DateFormat('hh:mm a').format(
-                                    DateTime.fromMillisecondsSinceEpoch(
-                                        weather.sunset * 1000)),
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w500)),
+                                    fontSize: 50.sp,
+                                    fontWeight: FontWeight.w500)),
+                            value: FittedBox(
+                              child: AutoSizeText(
+                                  DateFormat('hh:mm a').format(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          weather.sunset * 1000)),
+                                  locale: context
+                                      .read(appLocaleProvider)
+                                      .getAppLocale(context, _appLocaleState),
+                                  style: TextStyle(
+                                      fontSize: 48.sp,
+                                      fontWeight: FontWeight.w500)),
+                            ),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: ScreenUtil().setWidth(5)),
                           WeatherInfoCard(
                             cardIcon: WindIcon(
                               degree: weather.windDegree,
-                              size: 40,
+                              size: 110.sp,
                             ),
-                            title: Text(AppLocalizations.of(context).windSpeed,
-                                style: TextStyle(
-                                    fontSize: 13.5,
-                                    fontWeight: FontWeight.w500)),
-                            value: Text('${weather.windSpeed.floor()} km/h',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w500)),
+                            title: Align(
+                              alignment: Alignment(-0.3, 0.5),
+                              widthFactor: 0.6,
+                              heightFactor: 0.5,
+                              child: AutoSizeText(
+                                  AppLocalizations.of(context).windSpeed,
+                                  locale: context
+                                      .read(appLocaleProvider)
+                                      .getAppLocale(context, _appLocaleState),
+                                  style: TextStyle(
+                                      fontSize: 40.sp,
+                                      fontWeight: FontWeight.w500)),
+                            ),
+                            value: Container(
+                              width: ScreenUtil().setWidth(100),
+                              child: Container(
+                                height: ScreenUtil().setHeight(50),
+                                width: ScreenUtil().setWidth(35),
+                                child: FittedBox(
+                                  child: AutoSizeText(
+                                      '${weather.windSpeed.floor()} km/h',
+                                      locale: context
+                                          .read(appLocaleProvider)
+                                          .getAppLocale(
+                                              context, _appLocaleState),
+                                      style: TextStyle(
+                                          fontSize: 40.sp,
+                                          fontWeight: FontWeight.w600)),
+                                ),
+                              ),
+                            ),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: ScreenUtil().setWidth(5)),
                           WeatherInfoCard(
                             cardIcon: Icon(
                               WeatherIcons.humidity,
                               size: 30,
                             ),
-                            title: Text(AppLocalizations.of(context).humidity,
+                            title: AutoSizeText(
+                                AppLocalizations.of(context).humidity,
+                                locale: context
+                                    .read(appLocaleProvider)
+                                    .getAppLocale(context, _appLocaleState),
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w500)),
-                            value: Text('${weather.humidity}%',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500)),
+                                    fontSize: 48.sp,
+                                    fontWeight: FontWeight.w500)),
+                            value: FittedBox(
+                              child: AutoSizeText('${weather.humidity}%',
+                                  locale: context
+                                      .read(appLocaleProvider)
+                                      .getAppLocale(context, _appLocaleState),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500)),
+                            ),
                           ),
                           SizedBox(width: 5),
                           WeatherInfoCard(
@@ -272,66 +347,118 @@ class WeatherDetailsScreen extends ConsumerWidget with WeatherIconsMapper {
                               Icons.visibility,
                               size: 40,
                             ),
-                            title: Text(AppLocalizations.of(context).visibility,
+                            title: AutoSizeText(
+                                AppLocalizations.of(context).visibility,
+                                locale: context
+                                    .read(appLocaleProvider)
+                                    .getAppLocale(context, _appLocaleState),
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500)),
-                            value: Text('${weather.visibility / 1000} km',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500)),
+                                    fontSize: 50.sp,
+                                    fontWeight: FontWeight.w500)),
+                            value: Container(
+                              height: ScreenUtil().setHeight(50),
+                              child: FittedBox(
+                                child: AutoSizeText(
+                                    '${weather.visibility / 1000} km',
+                                    locale: context
+                                        .read(appLocaleProvider)
+                                        .getAppLocale(context, _appLocaleState),
+                                    style: TextStyle(
+                                        fontSize: 50.sp,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                            ),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: ScreenUtil().setWidth(5)),
                           WeatherInfoCard(
                             cardIcon: Image.asset(
                               'assets/images/pressure.png',
                               scale: 0.3,
-                              height: 40,
+                              height: ScreenUtil().setHeight(100),
                               color: context
                                   .read(appThemeProvider)
                                   .getImageIconColor(context, _appThemeState),
                             ),
-                            title: Text(AppLocalizations.of(context).pressure,
+                            title: AutoSizeText(
+                                AppLocalizations.of(context).pressure,
+                                locale: context
+                                    .read(appLocaleProvider)
+                                    .getAppLocale(context, _appLocaleState),
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500)),
-                            value: Text('${weather.pressure} mb',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500)),
+                                    fontSize: 50.sp,
+                                    fontWeight: FontWeight.w500)),
+                            value: FittedBox(
+                              child: AutoSizeText('${weather.pressure} mb',
+                                  locale: context
+                                      .read(appLocaleProvider)
+                                      .getAppLocale(context, _appLocaleState),
+                                  style: TextStyle(
+                                      fontSize: 55.sp,
+                                      fontWeight: FontWeight.w500)),
+                            ),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: ScreenUtil().setWidth(5)),
                           WeatherInfoCard(
                             cardIcon: Image.asset(
                               'assets/images/dewpoint.png',
                               scale: 0.3,
-                              height: 40,
+                              height: ScreenUtil().setHeight(100),
                               color: context
                                   .read(appThemeProvider)
                                   .getImageIconColor(context, _appThemeState),
                             ),
-                            title: Text(AppLocalizations.of(context).dewPoint,
+                            title: AutoSizeText(
+                                AppLocalizations.of(context).dewPoint,
+                                locale: context
+                                    .read(appLocaleProvider)
+                                    .getAppLocale(context, _appLocaleState),
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w500)),
-                            value: Text('${weather.dewPoint.ceil()}º',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500)),
+                                    fontSize: 48.sp,
+                                    fontWeight: FontWeight.w500)),
+                            value: FittedBox(
+                              child: AutoSizeText('${weather.dewPoint.ceil()}º',
+                                  locale: context
+                                      .read(appLocaleProvider)
+                                      .getAppLocale(context, _appLocaleState),
+                                  style: TextStyle(
+                                      fontSize: 55.sp,
+                                      fontWeight: FontWeight.w500)),
+                            ),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: ScreenUtil().setWidth(5)),
                           WeatherInfoCard(
                             cardIcon: Icon(
                               Icons.wb_sunny_rounded,
                               size: 40,
                             ),
-                            title: Text(AppLocalizations.of(context).uvi,
+                            title: AutoSizeText(
+                                AppLocalizations.of(context).uvi,
+                                locale: context
+                                    .read(appLocaleProvider)
+                                    .getAppLocale(context, _appLocaleState),
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500)),
-                            value: Text('${weather.uvi.ceil()}',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500)),
+                                    fontSize: 50.sp,
+                                    fontWeight: FontWeight.w500)),
+                            value: Container(
+                              width: ScreenUtil().setWidth(35),
+                              height: ScreenUtil().setHeight(50),
+                              child: FittedBox(
+                                child: AutoSizeText('${weather.uvi.ceil()}',
+                                    locale: context
+                                        .read(appLocaleProvider)
+                                        .getAppLocale(context, _appLocaleState),
+                                    style: TextStyle(
+                                        fontSize: 55.sp,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
                   Container(
-                    width: double.infinity,
+                    width: ScreenUtil().screenWidth,
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     child: HourlyForecastCard(
                       jsonDecode(weather.hourlyForecast),

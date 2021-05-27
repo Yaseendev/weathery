@@ -6,6 +6,7 @@ import 'package:weathery/database/moorDB.dart';
 import 'package:weathery/utils/providers.dart';
 import 'package:weathery/utils/repository.dart';
 import 'package:weathery/views/weather_details_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CitySearch extends SearchDelegate<String> {
   @override
@@ -61,13 +62,13 @@ class CitySearch extends SearchDelegate<String> {
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
-                      fontSize: 20),
+                      fontSize: 55.sp),
                   children: [
                     TextSpan(
                       text:
                           '${searchList[index]['name']}, ${searchList[index]['country']}'
                               .substring(query.length),
-                      style: TextStyle(color: Colors.grey[800], fontSize: 20),
+                      style: TextStyle(color: Colors.grey[800], fontSize: 55.sp),
                     ),
                   ],
                 ),

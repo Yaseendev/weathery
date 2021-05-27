@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../utils/providers.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ThemeToggleButton extends ConsumerWidget {
   final List<String> values;
@@ -33,14 +35,16 @@ class ThemeToggleButton extends ConsumerWidget {
                 children: List.generate(
                   values.length,
                   (index) => Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * .1),
-                    child: Text(
+                    padding: EdgeInsets.symmetric(horizontal: 95.h),
+                    child: FittedBox(
+                                          child: AutoSizeText(
                         values[index],
                         style: TextStyle(
                             fontSize: width * .05,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF918f95)),
                       ),
+                    ),
                   ),
                 ),
               ),

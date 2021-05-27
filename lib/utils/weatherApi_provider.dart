@@ -4,7 +4,8 @@ import 'package:weathery/database/moorDB.dart';
 
 class WeatherApiProvider {
   static const String rootUrl = 'http://api.openweathermap.org/data/2.5';
-  static const String appid = ''; //TODO: Get your appid from openweathermap.org and paste it here
+  static const String appid =
+      ''; //TODO: Get your appid from openweathermap.org and paste it here
   http.Client client = http.Client();
 
   Future<Map<String, dynamic>> getCurrentWeather(
@@ -44,6 +45,9 @@ class WeatherApiProvider {
     final cityData = await getCityWeather(latitude, longitude);
     final forecastDataInAr = await getCityWeatherInArabic(latitude, longitude);
     final forecastData = await getCurrentWeather(latitude, longitude);
-    return Weathers.fromJson(weatherData: cityData, forecastData: forecastData, arData:forecastDataInAr);
+    return Weathers.fromJson(
+        weatherData: cityData,
+        forecastData: forecastData,
+        arData: forecastDataInAr);
   }
 }

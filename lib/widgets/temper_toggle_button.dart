@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weathery/utils/converters.dart';
 import 'package:weathery/utils/providers.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TemperToggleButton extends ConsumerWidget {
   final List<String> values;
@@ -58,13 +60,15 @@ class TemperToggleButton extends ConsumerWidget {
                     }
                   },
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * .099),
-                    child: Text(
-                      values[index],
-                      style: TextStyle(
-                          fontSize: width * 0.035,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF918f95)),
+                    padding: EdgeInsets.symmetric(horizontal: 88.h),
+                    child: FittedBox(
+                      child: AutoSizeText(
+                        values[index],
+                        style: TextStyle(
+                            fontSize: width * 0.035,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF918f95)),
+                      ),
                     ),
                   ),
                 ),

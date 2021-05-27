@@ -5,6 +5,7 @@ import 'package:weathery/widgets/language_toggle_button.dart';
 import 'package:weathery/widgets/temper_toggle_button.dart';
 import 'package:weathery/widgets/theme_toggle_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsScreen extends ConsumerWidget {
   @override
@@ -22,7 +23,7 @@ class SettingsScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 12.0, top: 8.0),
               child: Text(
                 AppLocalizations.of(context).tempUnit,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 80.sp, fontWeight: FontWeight.w700),
               ),
             ),
             SizedBox(height: 5),
@@ -30,7 +31,11 @@ class SettingsScreen extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: TemperToggleButton(
-                  values: [AppLocalizations.of(context).celsius, AppLocalizations.of(context).fahrenheit, AppLocalizations.of(context).kelvin],
+                  values: [
+                    AppLocalizations.of(context).celsius,
+                    AppLocalizations.of(context).fahrenheit,
+                    AppLocalizations.of(context).kelvin
+                  ],
                 ),
               ),
             ),
@@ -39,13 +44,16 @@ class SettingsScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 15.0, top: 8.0, bottom: 5.0),
               child: Text(
                 AppLocalizations.of(context).appTheme,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 80.sp, fontWeight: FontWeight.w700),
               ),
             ),
             SizedBox(height: 5),
             Center(
               child: ThemeToggleButton(
-                values: [AppLocalizations.of(context).light, AppLocalizations.of(context).dark],
+                values: [
+                  AppLocalizations.of(context).light,
+                  AppLocalizations.of(context).dark
+                ],
                 onToggleCallback: (v) {
                   _appThemeStateProvider.toggleAppTheme(context);
                 },
@@ -56,7 +64,7 @@ class SettingsScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 15.0, top: 8.0, bottom: 5.0),
               child: Text(
                 AppLocalizations.of(context).language,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 80.sp, fontWeight: FontWeight.w700),
               ),
             ),
             SizedBox(height: 5),
